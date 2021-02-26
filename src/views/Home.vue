@@ -1,32 +1,25 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center"></div>
-
-      <v-spacer></v-spacer>
-
-      <span class="mr-2">用户名</span>
-      <v-icon>mdi-login-variant</v-icon>
-    </v-app-bar>
-
+    <NavBar/>
     <v-main>
-      <HelloWorld/>
+      <CardList/>
     </v-main>
   </v-app>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+//import HelloWorld from '@/components/HelloWorld.vue'
+// eslint-disable-next-line no-unused-vars
+import CardList from '@/components/CardList.vue'
+// @ is an alias to /src
+import NavBar from "@/components/NavBar";
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+    CardList,
+    NavBar
   }
 }
 </script>

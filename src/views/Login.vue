@@ -1,11 +1,12 @@
 <template>
   <v-app>
-<!--    登录页-->
-    <v-container class="title" >
-      <span style="font-size: larger">用户登录</span>
-    </v-container>
-    <v-form v-model="valid">
-      <v-container>
+    <!--    登录页-->
+    <div class="login-con">
+    <v-container>
+      <v-container class="title">
+        <span style="font-size: larger" class="d-flex justify-center">用户登录</span>
+      </v-container>
+      <v-form v-model="valid" >
         <v-row
           justify="center">
           <v-col
@@ -49,16 +50,27 @@
               color="primary"
               @click="loginEvent"
             >
-             Login In
+              Login In
             </v-btn>
           </v-col>
         </v-row>
-      </v-container>
-    </v-form>
+      </v-form>
+    </v-container>
+    </div>
+    <v-btn
+      @click="testEvent"
+    >
+      测试全局提示
+    </v-btn>
+<!--    <v-alert-->
+<!--      type="success"-->
+<!--    >提示</v-alert>-->
   </v-app>
 </template>
 
 <script>
+  import {userLogin} from '@/apis/user'
+  import signIn from '@/utils/sign-in'
   export default {
     name: "Login",
     data: () => ({
@@ -72,22 +84,46 @@
       passWordRules: [v => !!v || 'passWord is required'],
     }),
     methods: {
-      loginEvent(){
+      loginEvent() {
         // const {name,passWord} = this
-        console.log(this.name,this.passWord)
+        console.log(this.name, this.passWord)
+        let param = {
+          username:this.name,
+          password:this.passWord
+        }
+        userLogin(param)
+          .then(value => {
+            console.log(value)
+            if(value.code===200){
+              //设置token
+              const {accessToken, expiredIn} = value.data
+              signIn({accessToken, expiresIn: expiredIn})
+              // console.log('跳转到列表页')
+              this.$router.push('/orderList')
+            }else{
+              this.$myToast.error(value.msg);
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
         //调用登录接口，登录成功--》主页面
-        this.$router.push('/home')
-      }
+        // this.$router.push('/home')
+      },
+      testEvent() {
+        this.$myToast.error('错误');
+        this.$store.dispatch('alerts/openAlerts',{
+          msg:'瓦拉伊利五路',
+          type:'success'
+        })
+
+      },
     }
   }
 </script>
 
 <style scoped>
-  ::v-deep .v-application--wrap{
-    margin-top: 10%;
+.login-con{
+ margin-top: 15%;
 }
-  .title{
-    text-align: center;
-    font-size: 2rem !important;
-  }
 </style>
