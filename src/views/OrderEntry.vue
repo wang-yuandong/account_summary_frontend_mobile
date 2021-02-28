@@ -41,99 +41,48 @@
 
         <v-text-field
           v-model="formData.customerName"
-          :counter="10"
-          :rules="nameRules"
           label="姓名"
           required
         ></v-text-field>
 
         <v-text-field
           v-model="formData.postSalesPerson"
-          :counter="10"
-          :rules="nameRules"
           label="售后"
           required
         ></v-text-field>
         <v-text-field
           v-model="formData.dealPreviousAmount"
-          :counter="10"
-          :rules="nameRules"
           label="补款"
           required
         ></v-text-field>
         <v-text-field
           v-model="formData.customerType"
-          :counter="10"
-          :rules="nameRules"
           label="对象"
           required
         ></v-text-field>
         <div>
           体验卡与操作次数
         </div>
-        <!--        <v-select-->
-        <!--          v-model="trialCard"-->
-        <!--          :items="items1"-->
-        <!--          :rules="[v => !!v || 'Item is required']"-->
-        <!--          label="体验卡"-->
-        <!--          item-text="name"-->
-        <!--          item-value="id"-->
-        <!--          return-object-->
-        <!--          required-->
-        <!--        ></v-select>-->
         <PartAmountCompontent type="trialCards" :trialCardDict="trialCardDict" :bodyPartDict="bodyPartDict"
                               @callbackEvent='callbackFormat'/>
-
-
-        <!--        <v-text-field-->
-        <!--          v-model="name"-->
-        <!--          :counter="10"-->
-        <!--          :rules="nameRules"-->
-        <!--          label="体验卡操作次数"-->
-        <!--          required-->
-        <!--        ></v-text-field>-->
-
-
         <v-text-field
           v-model="formData.dd"
-          :counter="10"
-          :rules="nameRules"
           label="Dd"
           required
         ></v-text-field>
 
         <v-text-field
           v-model="formData.lm"
-          :counter="10"
-          :rules="nameRules"
           label="Lm"
           required
         ></v-text-field>
 
         <v-text-field
           v-model="formData.xc"
-          :counter="10"
-          :rules="nameRules"
           label="Xc"
           required
         ></v-text-field>
         <!-- 选择身体部位和操作次数 组件-->
-        <!--        <v-select-->
-        <!--          v-model="select"-->
-        <!--          :items="items"-->
-        <!--          :rules="[v => !!v || 'Item is required']"-->
-        <!--          label="成交部位"-->
-        <!--          required-->
-        <!--        ></v-select>-->
-        <!--        <v-text-field-->
-        <!--          v-model="name"-->
-        <!--          :counter="10"-->
-        <!--          :rules="nameRules"-->
-        <!--          label="成交操作次数"-->
-        <!--          required-->
-        <!--        ></v-text-field>-->
-
-
         <div>
           成交部位与次数
         </div>
@@ -142,37 +91,15 @@
 
         <v-text-field
           v-model="formData.dealAmount"
-          :counter="10"
-          :rules="nameRules"
           label="成交金额"
           required
         ></v-text-field>
 
         <v-text-field
           v-model="formData.linkedOrderOperation"
-          :counter="10"
-          :rules="nameRules"
           label="已有订单操作次数"
           required
         ></v-text-field>
-
-
-        <!--        <v-select-->
-        <!--          v-model="select"-->
-        <!--          :items="items"-->
-        <!--          :rules="[v => !!v || 'Item is required']"-->
-        <!--          label="赠送部位"-->
-        <!--          required-->
-        <!--        ></v-select>-->
-
-        <!--        <v-text-field-->
-        <!--          v-model="name"-->
-        <!--          :counter="10"-->
-        <!--          :rules="nameRules"-->
-        <!--          label="赠送操作次数"-->
-        <!--          required-->
-        <!--        ></v-text-field>-->
-
 
         <div>
           赠送部位与次数
@@ -187,47 +114,24 @@
 
         <v-text-field
           v-model="formData.dealDueAmount"
-          :counter="10"
-          :rules="nameRules"
           label="成交欠款"
           required
         ></v-text-field>
         <v-text-field
           v-model="formData.dealPayAmount"
-          :counter="10"
-          :rules="nameRules"
           label="成交实收"
           required
         ></v-text-field>
         <v-text-field
           v-model="formData.consultant"
-          :counter="10"
-          :rules="nameRules"
           label="咨询师"
           required
         ></v-text-field>
         <v-text-field
           v-model="formData.cooperator"
-          :counter="10"
-          :rules="nameRules"
           label="配台人员"
           required
         ></v-text-field>
-
-        <!--        <v-select-->
-        <!--          v-model="select"-->
-        <!--          :items="items"-->
-        <!--          :rules="[v => !!v || 'Item is required']"-->
-        <!--          label="打版部位"-->
-        <!--          required-->
-        <!--        ></v-select>-->
-        <!--        <v-text-field-->
-        <!--          v-model="formData.boardingBodyPartsOperation"-->
-        <!--          :counter="10"-->
-        <!--          :rules="nameRules"-->
-        <!--          label="打板操作次数"-->
-        <!--          required-->
-        <!--        ></v-text-field>-->
 
         <div>
           打版部位与次数
@@ -236,22 +140,16 @@
 
         <v-text-field
           v-model="formData.boardingDueAmount"
-          :counter="10"
-          :rules="nameRules"
           label="打板欠款"
           required
         ></v-text-field>
         <v-text-field
           v-model="formData.boardingAmount"
-          :counter="10"
-          :rules="nameRules"
           label="打版金额"
           required
         ></v-text-field>
         <v-text-field
           v-model="formData.boardingPayAmount"
-          :counter="10"
-          :rules="nameRules"
           label="打板实收"
           required
         ></v-text-field>
@@ -259,7 +157,6 @@
 
         <v-text-field
           v-model="formData.boardingPreviousAmount"
-          :rules="nameRules"
           label="打板补款"
           required
         ></v-text-field>
@@ -285,17 +182,6 @@
             required
           ></v-date-picker>
         </v-menu>
-        <!--          <v-select-->
-        <!--            v-model="operator"-->
-        <!--            :items="items"-->
-        <!--            :rules="[v => !!v || 'Item is required']"-->
-        <!--            label="操作人"-->
-        <!--            item-text="name"-->
-        <!--            item-value="id"-->
-        <!--            return-object-->
-        <!--            required-->
-        <!--          ></v-select>-->
-
 
         <!--        <v-checkbox-->
         <!--          v-model="checkbox"-->
@@ -358,58 +244,20 @@ export default {
     shopDict: [],
     trialCardDict: [],
     bodyPartDict: [],
-    name: '',
-    nameRules: [
-      v => !!v || 'Name is required',
-      v => (v && v.length <= 10) || 'Name must be less than 10 characters',
-    ],
-    email: '',
-    emailRules: [
-      v => !!v || 'E-mail is required',
-      v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-    ],
+    // name: '',
+    // nameRules: [
+    //   v => !!v || 'Name is required',
+    //   v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+    // ],
+    // email: '',
+    // emailRules: [
+    //   v => !!v || 'E-mail is required',
+    //   v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+    // ],
     select: null,
-    items1: [
-      {
-        id: '1',
-        name: '体验卡1'
-      },
-      {
-        id: '2',
-        name: '体验卡2'
-      },
-      {
-        id: '3',
-        name: '体验卡3'
-      },
-      {
-        id: '4',
-        name: '体验卡4'
-      },
-    ],
-    items: [
-      {
-        id: '1',
-        name: '头部'
-      },
-      {
-        id: '2',
-        name: '脸部'
-      },
-      {
-        id: '3',
-        name: '颈部'
-      },
-      {
-        id: '4',
-        name: '手'
-      },
-    ],
-    checkbox: false,
-    switch1: true,
+    // checkbox: false,
     date: null,
     menu1: false,
-    menu2: false,
     vendor: {},//渠道
     agent: {},//代理商
     shop: {},//门店
@@ -423,7 +271,6 @@ export default {
       "postSalesPerson": "",
       "dealPreviousAmount": '',
       "customerType": "",
-      // "trialCardOperation": "",
       "dd": "",
       "lm": "",
       "xc": "",
@@ -454,6 +301,7 @@ export default {
         //     {
         //       "id":10005,
         //       "name":"太阳穴"
+        //        '操作次数':'1'
         //     }
         //   ]
         // },
@@ -532,7 +380,7 @@ export default {
         })
     },
     submitEvent() {
-      console.log('form:', this.$refs.form)
+      // console.log('form:', this.$refs.form)
       this.formData = {
         ...this.formData,
         vendorId: this.vendor.id,//渠道
@@ -541,7 +389,6 @@ export default {
         operatorId: this.operator.id,//渠道
         operationDate: this.computedDateFormattedMomentjs
       }
-      console.log('提交', this.formData)
       if (!this.validate()) {
         return
       }
@@ -549,8 +396,12 @@ export default {
         .then(value => {
           if (value.code === 200) {
             console.log('添加成功')
+            this.$myToast.open({msg: '添加成功', type: 'success'})
+            //回到订单列表页
+            this.$router.push('/orderList')
           } else {
             console.log(value.msg)
+            this.$myToast.open({msg: value.msg, type: 'warning'})
           }
         })
     },
@@ -620,30 +471,6 @@ export default {
      * @param data
      */
     formatTrialCards(list) {
-      // let list = [
-      //   {
-      //     id: 1,//身体部位id
-      //     name: 1,//身体部位名称
-      //     amount: 11,
-      //     trialCardsId: '01',
-      //     trialCardsName: '体验卡项1'
-      //   },
-      //   {
-      //     id: 2,//身体部位id
-      //     name: 2,//身体部位名称
-      //     amount: 22,
-      //     trialCardsId: '01',
-      //     trialCardsName: '体验卡项1'
-      //   },
-      //   {
-      //     id: 2,//身体部位id
-      //     name: 1,//身体部位名称
-      //     amount: 22,
-      //     trialCardsId: '02',
-      //     trialCardsName: '体验卡项2'
-      //   }
-      // ]
-
       /*处理体验卡数据*/
       var b = list.map((item) => {
         return item.trialCardsId

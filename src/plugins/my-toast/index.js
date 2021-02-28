@@ -5,7 +5,7 @@ const MyToast = {};
 MyToast.install = (Vue, options) => {
   let instance = null
 
-  const open = ({msg, duration = 1500}) => {
+  const open = ({msg,type, duration = 1500}) => {
     if (instance) {
       return
     }
@@ -13,6 +13,7 @@ MyToast.install = (Vue, options) => {
     instance = new Vue(ToastComponent);
     document.getElementsByClassName('v-application--wrap')[0].appendChild(instance.$mount().$el)
     instance.message = msg
+    instance.type = type
     setTimeout(() => {
       destroy()
     }, duration)

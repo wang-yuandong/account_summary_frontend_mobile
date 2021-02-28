@@ -97,6 +97,8 @@ export default {
             const {data} = value
             this.desserts = data.list
             this.total = data.total
+          }else{
+            this.$myToast.open({msg: value.msg, type: 'warning'})
           }
           console.log(value)
         })

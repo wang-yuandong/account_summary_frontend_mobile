@@ -1,18 +1,20 @@
 <template>
-  <v-alert
+  <v-snackbar
     transition="scroll-y-transition"
-    dense
-    type="success"
-  >Im an Alert Usage Example
-  </v-alert>
+    :color="type"
+    :value="visible"
+    centered
+  >
+    {{message}}
+  </v-snackbar>
 </template>
 <script>
 export default {
   name: 'MyMessage',
+  props:['message','type'],
   data() {
     return {
-      visible: false,
-      message: "",
+      visible: true,
     };
   },
   watch: {

@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import router from '@/router/routers'
+import router from '@/router/index.js'
 import {getToken} from '@/utils/auth'
 import {createFormData} from './create-form-data'
 
@@ -37,24 +37,32 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const code = response.status
-
-    if ([401, 403].indexOf(code) !== -1) {
-      //token失效，或者未登录 跳转到登录页
-      // console.log(response)
-      this.$router.push('/login')
-    } else if (code === 200) {
-      // console.log(response)
-      return response.data
-    }else {
-      //抛出错误信息
-      console.log(response)
+    console.log('code',code)
+    if (code < 200 || code > 300) {
+      // Notification.error({
+      //   title: response.message
+      // })
       return Promise.reject('error')
+    } else {
+      return response.data
     }
-
   },
   error => {
+    let code = 0
+    try {
+      code = error.response.data.status
+    } catch (e) {
+      return Promise.reject(error)
+    }
+    if (code) {
+      if([401, 403].indexOf(code) !== -1){
+        window.location.replace('/login')
+      }else{
+        const errorMsg = error.response.data.message
+      console.log(errorMsg)
+      }
+    }
    //抛出异常信息
-    this.$myToast(error)
     return Promise.reject(error)
   }
 )
