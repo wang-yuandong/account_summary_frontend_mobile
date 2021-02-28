@@ -3,12 +3,12 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
+import myToast from './plugins/my-toast'
 import moment from 'moment'
-import Toast  from "./components/common/Message/index";
 
 Vue.config.productionTip = false
 Vue.prototype.$moment = moment
-Vue.use(Toast)
+Vue.use(myToast, {vuetify, App})
 
 new Vue({
   vuetify,

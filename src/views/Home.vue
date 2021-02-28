@@ -1,10 +1,8 @@
 <template>
-  <v-app>
+  <v-main>
     <NavBar/>
-    <v-main>
-      <CardList/>
-    </v-main>
-  </v-app>
+    <CardList/>
+  </v-main>
 </template>
 
 <script>

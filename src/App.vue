@@ -1,20 +1,16 @@
 <template>
-  <div id="app">
-    <v-app>
-      <router-view></router-view>
-      <Alerts/>
-    </v-app>
-  </div>
+  <v-app>
+    <router-view></router-view>
+  </v-app>
 </template>
 
 <script>
-  import Alerts from "@/components/common/Alerts.vue";
 
-  export default {
-    name: 'App',
-    components: {Alerts},
-    data: () => ({
-      //
-    }),
-  };
+export default {
+  name: 'App',
+  components: {},
+  data: () => ({
+    //
+  }),
+};
 </script>
