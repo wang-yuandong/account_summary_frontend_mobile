@@ -1,14 +1,13 @@
-
-
 const test = 'http://39.102.103.243'// 测试
 
 module.exports = {
+  outputDir: 'm_build',
   lintOnSave: false,
   transpileDependencies: [
     'vuetify'
   ],
   devServer: {
-    open:true,
+    open: true,
     proxy: {
       // '/user': {
       //   target: test,//需要跨域的目标url
@@ -17,7 +16,7 @@ module.exports = {
       //   // '^/user': 'user'
       //   // }
       // },
-      '/mp-web':{
+      '/mp-web': {
         target: test,//需要跨域的目标url
         changeOrigin: true,// 将基于名称的虚拟托管网站的选项，如果不配置，请求会报404
         // pathRewrite: {
