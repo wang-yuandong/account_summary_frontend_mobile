@@ -5,7 +5,9 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "c_publish": "scp -r m_build ruibang@39.102.103.243:/home/ruibang",
+    "copy": "sudo cp -r m_build /opt/openresty/nginx"
   },
   "dependencies": {
     "axios": "^0.21.1",
