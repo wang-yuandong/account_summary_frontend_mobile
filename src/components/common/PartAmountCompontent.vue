@@ -11,8 +11,8 @@
           :key="index"
           @click:close="closeChip(index)"
         >
-          <span v-if="type==='trialCards'">{{item.trialCardsName}}{{item.name}}{{item.amount}}次</span>
-          <span v-else>{{item.name}}{{item.amount}}次</span>
+          <span v-if="type==='trialCards'">{{item.trialCardsName}}{{item.name}}{{item.amount}}</span>
+          <span v-else>{{item.name}}{{item.amount}}</span>
         </v-chip>
       </v-col>
     </v-row>
@@ -38,10 +38,10 @@
       >
         <v-select
           v-model="select"
-          :items="bodyPartDict"
+          :items="type==='trialCards'?bodyPartDictByTriaCard:bodyPartDict"
           item-text="name"
           item-value="id"
-          label="身体部位"
+          label="操作部位"
           return-object
         ></v-select>
       </v-col>
@@ -70,68 +70,33 @@
 <script>
   import {trialCardDict} from '@/apis/trialCard'
   import {bodyPartDict} from '@/apis/bodyPart'
+
   export default {
     name: 'partAmountCompontent',
-    // props: ['type','trialCardDict','bodyPartDict'],
-    props: ['type'],
+    props: ['type', 'trialCardDict', 'bodyPartDict'],
+    // props: ['type'],
     data() {
       return {
         chip: true,
-        trialCardDict: [],
-        bodyPartDict: [],
+        // trialCardDict: [],
+        // bodyPartDict: [],
+        bodyPartDictByTriaCard: [],
         trialCard: {},//体验卡
         id: '',//选中得  身体部位id
         select: {},//选中身体部位
         amount: '',//操作次数
-        // items1: [
-        //   {
-        //     id: '1',
-        //     name: '体验卡1'
-        //   },
-        //   {
-        //     id: '2',
-        //     name: '体验卡2'
-        //   },
-        //   {
-        //     id: '3',
-        //     name: '体验卡3'
-        //   },
-        //   {
-        //     id: '4',
-        //     name: '体验卡4'
-        //   },
-        // ],
-        // items: [
-        //   {
-        //     id: '1',
-        //     name: '头部'
-        //   },
-        //   {
-        //     id: '2',
-        //     name: '脸部'
-        //   },
-        //   {
-        //     id: '3',
-        //     name: '颈部'
-        //   },
-        //   {
-        //     id: '4',
-        //     name: '手'
-        //   },
-        //
-        // ],
         partAmountData: [],//身体部位数据
       }
     },
     created() {
-      this.trialCardDictList()
-      this.bodyPartDictList({})
+      // this.trialCardDictList()
+      // this.bodyPartDictList({})
     },
     methods: {
-      selectTriaCard(value){
+      selectTriaCard(value) {
         // console.log(value)
         this.bodyPartDictList({
-          trialCardId:value.id
+          trialCardId: value.id
         })
       },
       trialCardDictList() {
@@ -147,7 +112,8 @@
         bodyPartDict(param)
           .then(value => {
             if (value.code === 200) {
-              this.bodyPartDict = value.data
+              // this.$emit('update:bodyPartDict', value.data)
+              this.bodyPartDictByTriaCard = value.data
             }
           })
       },
@@ -173,10 +139,10 @@
           if (this.type === 'trialCards') {
             //无体验卡选项
             let tem = this.partAmountData.filter((pd) => {
-              if (pd.trialCardsId !== this.trialCard.id ) {
+              if (pd.trialCardsId !== this.trialCard.id) {
                 return pd
               }
-              if(pd.trialCardsId === this.trialCard.id && pd.id !== this.select.id){
+              if (pd.trialCardsId === this.trialCard.id && pd.id !== this.select.id) {
                 return pd
               }
             })
@@ -211,6 +177,11 @@
         this.partAmountData.splice(index, 1)
       }
       ,
+    },
+    watch: {
+      // bodyPartDict: function (val, oldVal) {
+      //   console.log(val, oldVal)
+      // },
     }
   }
 </script>

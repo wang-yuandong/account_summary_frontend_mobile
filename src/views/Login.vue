@@ -33,7 +33,7 @@
                 type="password"
                 v-model="passWord"
                 :rules="passWordRules"
-                label="passWord"
+                label="password"
                 required
               ></v-text-field>
             </v-col>
@@ -96,7 +96,7 @@
             if (value.code === 200) {
               //设置token
               const {accessToken, expiredIn} = value.data
-              signIn({accessToken, expiresIn: expiredIn})
+              signIn({accessToken, expiresIn: expiredIn,name:this.name})
               // console.log('跳转到列表页')
               this.$router.push('/orderList')
             } else {
