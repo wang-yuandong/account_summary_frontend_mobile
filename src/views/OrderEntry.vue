@@ -111,15 +111,15 @@
         ></v-text-field>
 
         <v-select
-          v-model="vendor"
-          :items="vendorDict"
+          v-model="formData.linkedOrderBodyPartNames"
+          :items="orderRelationDict"
           label="已有订单"
           item-text="name"
           item-value="id"
-          return-object
           required
+          return-object
           :rules="[v => !!v || '已有订单不能为空']"
-          @input="selectVendor"
+          @input="linkedOrderBodyPar"
         ></v-select>
 
         <v-text-field
@@ -209,40 +209,10 @@
             required
           ></v-date-picker>
         </v-menu>
-
-        <!--        <v-checkbox-->
-        <!--          v-model="checkbox"-->
-        <!--          :rules="[v => !!v || 'You must agree to continue!']"-->
-        <!--          label="Do you agree?"-->
-        <!--          required-->
-        <!--        ></v-checkbox>-->
-
-        <!--        <v-btn-->
-        <!--          :disabled="!valid"-->
-        <!--          color="success"-->
-        <!--          class="mr-4"-->
-        <!--          @click="validate"-->
-        <!--        >-->
-        <!--          Validate-->
-        <!--        </v-btn>-->
-
-        <!--        <v-btn-->
-        <!--          color="error"-->
-        <!--          class="mr-4"-->
-        <!--          @click="reset"-->
-        <!--        >-->
-        <!--          Reset Form-->
-        <!--        </v-btn>-->
-
-        <!--        <v-btn-->
-        <!--          color="warning"-->
-        <!--          @click="resetValidation"-->
-        <!--        >-->
-        <!--          Reset Validation-->
-        <!--        </v-btn>-->
         <v-btn
           @click="submitEvent"
           class="submit-btn"
+          color="primary"
         >
           提交
         </v-btn>
@@ -255,15 +225,17 @@
   import moment from 'moment'
   import PartAmountCompontent from "@/components/common/PartAmountCompontent";
   import NavBar from "@/components/NavBar";
+  import ConsumeDetails from "@/components/common/ConsumeDetails";
   import {shopDict} from '@/apis/shop'
   import {agentDict} from '@/apis/agent'
   import {trialCardDict} from '@/apis/trialCard'
   import {bodyPartDict} from '@/apis/bodyPart'
-  import {orderCreate} from '@/apis/order'
+  import {orderCreate, orderRelation} from '@/apis/order'
+
 
   export default {
     name: "OrderEntry",
-    components: {PartAmountCompontent, NavBar},
+    components: {PartAmountCompontent, NavBar, ConsumeDetails},
     data: () => ({
       valid: true,
       vendorDict: [],//渠道关联数据
@@ -271,6 +243,7 @@
       shopDict: [],
       trialCardDict: [],
       bodyPartDict: [],
+      orderRelationDict: [],
       name: '',
       nameRules: [
         v => !!v || 'Name is required',
@@ -284,7 +257,7 @@
 
       select: null,
       // checkbox: false,
-      date:  moment().format('YYYY-MM-DD'),
+      date: moment().format('YYYY-MM-DD'),
       menu1: false,
       vendor: {},//渠道
       agent: {},//代理商
@@ -305,6 +278,7 @@
         "dealBodyParts": [],
         "dealOperation": "",//'1,1,1'
         "dealAmount": '',
+        'linkedOrderBodyPartNames': '',
         "linkedOrderOperation": "",
         "freeBodyParts": [],
         "freeBodyOperation": '',//'1,1,1'
@@ -359,6 +333,7 @@
       this.shopDictList()
       this.trialCardDictList()
       this.bodyPartDictList()
+      this.orderRelationList({})
     },
     methods: {
       validate() {
@@ -371,9 +346,21 @@
         this.$refs.form.resetValidation()
       },
       //选中渠道查询代理商
-      selectVendor(value){
+      selectVendor(value) {
         //代理商查询
-        this.agentDictList({vendorId:value.id})
+        this.agentDictList({vendorId: value.id})
+      },
+      linkedOrderBodyPar(value) {
+        Vue.set(this.formData,linkedOrderBodyPartNames, value.name)
+        // this.formData.linkedOrderBodyPartNames = value.name
+      },
+      orderRelationList(param) {
+        orderRelation(param)
+          .then(value => {
+            if (value.code === 200) {
+              this.orderRelationDict = value.data
+            }
+          })
       },
       agentDictList(param) {
         //代理商
@@ -545,7 +532,7 @@
           }
           trialCards.push(tItem)
         }
-        console.log('trialCards', trialCards)
+        // console.log('trialCards', trialCards)
         return trialCards
       },
     },

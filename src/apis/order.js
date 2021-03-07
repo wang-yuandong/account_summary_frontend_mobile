@@ -21,3 +21,14 @@ export const orderCreate = param =>
     method: 'POST',
     data: param,
   })
+
+/**
+ * 订单关联
+ * @param param
+ */
+export const orderRelation = param =>
+  request({
+    url: `${MP_PATH}/order/relation`,
+    method: 'POST',
+    data: param,
+  })

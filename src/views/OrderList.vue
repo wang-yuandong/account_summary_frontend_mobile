@@ -27,6 +27,7 @@
       class="elevation-1"
       :server-items-length="total"
       @update:options="changePagination"
+      @click:row="openConsumeImport"
     ></v-data-table>
 
     <!--      <div class="text-center pt-2">-->
@@ -77,6 +78,11 @@ export default {
     }
   },
   methods: {
+    openConsumeImport(item){
+      console.log(item)
+      //跳转到 消耗物品页
+      this.$router.push({path:'/consumeDetails', query: { orderId: 123 }})
+    },
     addEvent() {
       //订单录入页
       this.$router.push('/orderEntry')

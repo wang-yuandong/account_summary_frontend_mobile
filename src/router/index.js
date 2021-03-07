@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login'
 import OrderEntry from "../views/OrderEntry";
 import OrderList from "../views/OrderList";
+import ConsumeDetails from "../components/common/ConsumeDetails";
 
 Vue.use(VueRouter)
 
@@ -21,14 +22,19 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue')
   },
   {
-    path:'/orderList',
-    name:'OrderList',
-    component:OrderList
+    path: '/orderList',
+    name: 'OrderList',
+    component: OrderList
   },
   {
-    path:'/orderEntry',
-    name:'OrderEntry',
-    component:OrderEntry
+    path: '/orderEntry',
+    name: 'OrderEntry',
+    component: OrderEntry
+  },
+  {
+    path: '/consumeDetails',
+    name: 'ConsumeDetails',
+    component: ConsumeDetails
   }
 ]
 
