@@ -351,7 +351,7 @@
         this.agentDictList({vendorId: value.id})
       },
       linkedOrderBodyPar(value) {
-        Vue.set(this.formData,linkedOrderBodyPartNames, value.name)
+        Vue.$set(this.formData,linkedOrderBodyPartNames, value.name)
         // this.formData.linkedOrderBodyPartNames = value.name
       },
       orderRelationList(param) {
