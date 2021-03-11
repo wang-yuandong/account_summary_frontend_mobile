@@ -3,23 +3,44 @@
     <NavBar/>
     <v-container class="d-flex justify-space-between">
       <div>订单列表</div>
-      <v-btn
-        depressed
-        color="primary"
-        @click="addEvent"
-      >
-        新增
-      </v-btn>
+      <!--      <v-btn-->
+      <!--        depressed-->
+      <!--        color="primary"-->
+      <!--        @click="addEvent"-->
+      <!--      >-->
+      <!--        新增-->
+      <!--      </v-btn>-->
     </v-container>
-    <!--      <v-data-table-->
-    <!--        :headers="headers"-->
-    <!--        :items="desserts"-->
-    <!--        :page.sync="page"-->
-    <!--        :items-per-page="itemsPerPage"-->
-    <!--        hide-default-footer-->
-    <!--        class="elevation-1"-->
-    <!--        @page-count="pageCount = $event"-->
-    <!--      ></v-data-table>-->
+    <v-container>
+      <v-row class="d-flex align-center">
+        <v-col cols="6">
+          <v-text-field
+            v-model="customerName"
+            label="客户姓名"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="3">
+          <v-btn
+            depressed
+            color="primary"
+            @click="searchEvent"
+          >
+            查询
+          </v-btn>
+        </v-col>
+        <v-col cols="3">
+          <v-btn
+            depressed
+            color="primary"
+            @click="addEvent"
+          >
+            新增
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-container>
+
+
     <v-data-table
       :headers="headers"
       :items="desserts"
@@ -28,7 +49,13 @@
       :server-items-length="total"
       @update:options="changePagination"
       @click:row="openConsumeImport"
-    ></v-data-table>
+      :disable-sort="Boolean(true)"
+    >
+      <template v-slot:item.state="{ item }">
+        {{item.state===1?'已提交':'未提交'}}
+      </template>
+
+    </v-data-table>
 
     <!--      <div class="text-center pt-2">-->
     <!--        <v-pagination-->
@@ -48,78 +75,94 @@
 </template>
 
 <script>
-// @ is an alias to /src
-//import HelloWorld from '@/components/HelloWorld.vue'
-// eslint-disable-next-line no-unused-vars
-import CardList from '@/components/CardList.vue'
-// @ is an alias to /src
-import NavBar from "@/components/NavBar";
+  // @ is an alias to /src
+  //import HelloWorld from '@/components/HelloWorld.vue'
+  // eslint-disable-next-line no-unused-vars
+  import CardList from '@/components/CardList.vue'
+  // @ is an alias to /src
+  import NavBar from "@/components/NavBar";
 
-export default {
-  name: 'OrderList',
-  components: {
-    NavBar
-  },
-  data() {
-    return {
-      total: 0,//总数
-      headers: [
-        {
-          text: 'ID',
-          align: 'start',
-          // sortable: false,
-          value: 'id',
-        },
-        {text: '姓名', value: 'customerName'},
-        {text: '售后', value: 'postSalesPerson'},
-        {text: '状态', value: 'state'},
-      ],
-      desserts: [],
-    }
-  },
-  methods: {
-    openConsumeImport(item){
-      console.log(item)
-      //跳转到 消耗物品页
-      this.$router.push({path:'/consumeDetails', query: { orderId: 123 }})
+  export default {
+    name: 'OrderList',
+    components: {
+      NavBar
     },
-    addEvent() {
-      //订单录入页
-      this.$router.push('/orderEntry')
+    data() {
+      return {
+        customerName: '',//客户姓名
+        total: 0,//总数
+        pageNum: '1',
+        pageSize: '10',
+        headers: [
+          {
+            text: 'ID',
+            align: 'start',
+            // sortable: false,
+            value: 'id',
+          },
+          {text: '姓名', value: 'customerName'},
+          {text: '售后', value: 'postSalesPerson'},
+          {text: '状态', value: 'state'},
+        ],
+        desserts: [],
+      }
     },
-    changePagination(pagePrams) {
-      const {
-        page,
-        itemsPerPage,
-      } = pagePrams
-      let param = {"pageNum": page, "pageSize": itemsPerPage}
-      this.queryList(param)
+    methods: {
+      searchEvent() {
+        //搜索查询数据
+        let param = {
+          customerName: this.customerName,
+          pageNum: this.pageNum,
+          pageSize: this.pageSize
+        }
+        this.queryList(param)
+      },
+      openConsumeImport(item) {
+        console.log(item)
+        //跳转到 消耗物品页
+        this.$router.push({path: '/consumeDetails', query: {orderId: item.id}})
+      },
+      addEvent() {
+        //订单录入页
+        this.$router.push('/orderEntry')
+      },
+      changePagination(pagePrams) {
+
+        const {
+          page,
+          itemsPerPage,
+        } = pagePrams
+        let param = {"pageNum": page, "pageSize": itemsPerPage}
+        this.pageNum = page
+        this.pageSize = itemsPerPage
+        this.queryList(param)
+
+      },
+      queryList(param) {
+        this.$store.dispatch('order/queryOrderList', param)
+          .then(value => {
+            //处理接口返回的数据
+            if (value.code === 200) {
+              const {data} = value
+              this.desserts = data.list
+              this.total = data.total
+            } else {
+              this.$myToast.open({msg: value.msg, type: 'warning'})
+            }
+            console.log(value)
+          })
+      }
     },
-    queryList(param) {
-      this.$store.dispatch('order/queryOrderList', param)
-        .then(value => {
-          //处理接口返回的数据
-          if (value.code === 200) {
-            const {data} = value
-            this.desserts = data.list
-            this.total = data.total
-          }else{
-            this.$myToast.open({msg: value.msg, type: 'warning'})
-          }
-          console.log(value)
-        })
-    }
-  },
-  created() {
-    //发起请求
-    let param = {"pageNum": 1, "pageSize": 5}
-    // this.queryList(param)
-  },
-  // computed:{
-  //   orderListData(){
-  //     console.log(this.$store.state.order.orderListData)
-  //     return this.$store.state.order.orderListData;
-  //   }
-  // }
-}
+    created() {
+      //发起请求
+      let param = {"pageNum": 1, "pageSize": 5}
+      // this.queryList(param)
+    },
+    // computed:{
+    //   orderListData(){
+    //     console.log(this.$store.state.order.orderListData)
+    //     return this.$store.state.order.orderListData;
+    //   }
+    // }
+  }
 </script>
