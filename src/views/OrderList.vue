@@ -51,10 +51,6 @@
       @click:row="openConsumeImport"
       :disable-sort="Boolean(true)"
     >
-      <template v-slot:item.state="{ item }">
-        {{item.state===1?'已提交':'未提交'}}
-      </template>
-
     </v-data-table>
 
     <!--      <div class="text-center pt-2">-->
@@ -102,7 +98,6 @@
           },
           {text: '姓名', value: 'customerName'},
           {text: '售后', value: 'postSalesPerson'},
-          {text: '状态', value: 'state'},
         ],
         desserts: [],
       }
