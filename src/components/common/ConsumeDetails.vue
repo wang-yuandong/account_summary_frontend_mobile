@@ -10,7 +10,7 @@
             v-model="consume.bodyCategoryId"
             :items="bodyCategory"
             :rules="[v => !!v || 'Item is required']"
-            label="归属类型"
+            label="项目"
             item-text="name"
             item-value="id"
             required
@@ -56,7 +56,7 @@
       </v-row>
     </div>
     <div class="d-flex justify-space-around">
-      <v-btn @click="addConsumeGoods">增加</v-btn>&nbsp;&nbsp;
+      <v-btn @click="addConsumeGoods">新增项目消耗</v-btn>&nbsp;&nbsp;
     </div>
     <v-text-field label="备注" v-model="dataSource.remark"/>
     <v-btn
